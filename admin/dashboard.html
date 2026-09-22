@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wedding Guest Dashboard | Sureka &amp; Deshan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:wght@400;500;600;700&family=Cinzel:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { background:#f3f1ec; font-family:'Cormorant Garamond', serif; color:#2b2925; }
+
+  .topbar { display:flex; align-items:center; justify-content:space-between; padding:20px 28px; background:#2b2925; color:#fdfcfb; }
+  .topbar h1 { font-family:'Alex Brush', cursive; font-size:1.8rem; font-weight:400; }
+  .logout-btn { background:transparent; border:1px solid #fdfcfb; color:#fdfcfb; padding:8px 18px; border-radius:999px; font-family:'Cinzel', serif; font-size:0.72rem; letter-spacing:1.5px; text-transform:uppercase; cursor:pointer; }
+
+  .container { max-width:1100px; margin:0 auto; padding:28px 20px 60px; }
+
+  .stats-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:14px; margin-bottom:32px; }
+  .stat-card { background:#fdfcfb; border-radius:8px; padding:18px; text-align:center; box-shadow:0 6px 18px rgba(0,0,0,0.06); }
+  .stat-num { font-family:'Cinzel', serif; font-weight:600; font-size:1.8rem; color:#2b2925; }
+  .stat-label { font-size:0.78rem; letter-spacing:1px; text-transform:uppercase; color:#8b877e; font-family:'Cinzel', serif; margin-top:4px; }
+
+  .panel { background:#fdfcfb; border-radius:8px; padding:22px; margin-bottom:28px; box-shadow:0 6px 18px rgba(0,0,0,0.06); }
+  .panel h2 { font-family:'Cinzel', serif; font-size:1.05rem; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:16px; }
+  .create-btn { background:#2b2925; color:#fdfcfb; border:none; padding:10px 22px; border-radius:999px; font-family:'Cinzel', serif; font-size:0.78rem; letter-spacing:1.5px; text-transform:uppercase; cursor:pointer; margin-bottom:16px; }
+
+  .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .form-grid .full { grid-column:1 / -1; }
+  .field label { display:block; font-family:'Cinzel', serif; font-size:0.68rem; letter-spacing:1.5px; text-transform:uppercase; color:#55524c; margin-bottom:6px; }
+  .field input, .field select, .field textarea {
+    width:100%; padding:9px 11px; font-family:'Cormorant Garamond', serif; font-size:1rem;
+    border:1px solid #ddd8cc; border-radius:4px; background:#fff;
+  }
+  .field textarea { min-height:60px; }
+  .submit-invite-btn { background:#c9a86a; color:#2b2925; border:none; padding:11px 24px; border-radius:999px; font-family:'Cinzel', serif; font-weight:600; font-size:0.8rem; letter-spacing:1.5px; text-transform:uppercase; cursor:pointer; margin-top:14px; }
+
+  .link-result { display:none; margin-top:18px; padding:14px; background:#faf3e3; border-radius:6px; }
+  .link-result input { width:100%; padding:8px 10px; border:1px solid #ddd8cc; border-radius:4px; margin:8px 0; font-family:monospace; font-size:0.85rem; }
+  .link-actions { display:flex; gap:10px; flex-wrap:wrap; }
+  .link-actions button, .link-actions a {
+    text-decoration:none; text-align:center; padding:9px 16px; border-radius:999px; border:none; cursor:pointer;
+    font-family:'Cinzel', serif; font-size:0.72rem; letter-spacing:1px; text-transform:uppercase;
+  }
+  .copy-btn { background:#2b2925; color:#fff; }
+  .wa-btn { background:#25D366; color:#fff; }
+
+  .filters { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:16px; }
+  .filters input, .filters select { padding:9px 12px; border:1px solid #ddd8cc; border-radius:6px; font-family:'Cormorant Garamond', serif; font-size:0.95rem; }
+
+  table { width:100%; border-collapse:collapse; background:#fdfcfb; border-radius:8px; overflow:hidden; }
+  th, td { padding:12px 10px; text-align:left; border-bottom:1px solid #eee9df; font-size:0.95rem; }
+  th { font-family:'Cinzel', serif; font-size:0.68rem; letter-spacing:1px; text-transform:uppercase; color:#8b877e; background:#f8f6f1; }
+  .badge { display:inline-block; padding:3px 10px; border-radius:999px; font-size:0.72rem; font-family:'Cinzel', serif; letter-spacing:0.5px; text-transform:uppercase; }
+  .badge.attending { background:#e3f3e3; color:#2f7a3c; }
+  .badge.not_attending { background:#f7e3e3; color:#a33b3b; }
+  .badge.pending { background:#f1efe6; color:#8b877e; }
+  .view-btn { background:none; border:1px solid #2b2925; padding:5px 14px; border-radius:999px; font-family:'Cinzel', serif; font-size:0.68rem; letter-spacing:1px; text-transform:uppercase; cursor:pointer; }
+
+  .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); align-items:center; justify-content:center; z-index:10; padding:16px; }
+  .modal-box { background:#fdfcfb; border-radius:8px; padding:26px; max-width:420px; width:100%; max-height:80vh; overflow-y:auto; }
+  .modal-box h3 { font-family:'Cinzel', serif; font-size:1.1rem; margin-bottom:14px; }
+  .modal-row { margin-bottom:10px; }
+  .modal-row .k { font-family:'Cinzel', serif; font-size:0.66rem; letter-spacing:1px; text-transform:uppercase; color:#8b877e; }
+  .modal-close { margin-top:16px; background:#2b2925; color:#fff; border:none; padding:9px 20px; border-radius:999px; cursor:pointer; font-family:'Cinzel', serif; font-size:0.75rem; letter-spacing:1px; text-transform:uppercase; }
+
+  @media (max-width: 640px) {
+    .form-grid { grid-template-columns:1fr; }
+    table, thead, tbody, th, td, tr { display:block; }
+    thead { display:none; }
+    tr { margin-bottom:14px; border:1px solid #eee9df; border-radius:8px; padding:10px; }
+    td { border:none; padding:6px 4px; }
+    td::before { content: attr(data-label); font-family:'Cinzel', serif; font-size:0.62rem; letter-spacing:1px; text-transform:uppercase; color:#8b877e; display:block; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <h1>Wedding Guest Dashboard ❤️</h1>
+    <button class="logout-btn" id="logoutBtn">Log Out</button>
+  </div>
+
+  <div class="container">
+
+    <div class="stats-grid" id="statsGrid">
+      <div class="stat-card"><div class="stat-num" id="statTotalInvites">0</div><div class="stat-label">Invitations</div></div>
+      <div class="stat-card"><div class="stat-num" id="statInvitedGuests">0</div><div class="stat-label">Invited Guests</div></div>
+      <div class="stat-card"><div class="stat-num" id="statAttending">0</div><div class="stat-label">Attending</div></div>
+      <div class="stat-card"><div class="stat-num" id="statNotAttending">0</div><div class="stat-label">Not Attending</div></div>
+      <div class="stat-card"><div class="stat-num" id="statPending">0</div><div class="stat-label">Pending</div></div>
+    </div>
+
+    <div class="panel">
+      <h2>Guest Invitations</h2>
+      <button class="create-btn" id="toggleCreateBtn">+ Create Invitation</button>
+
+      <form id="createForm" style="display:none;">
+        <div class="form-grid">
+          <div class="field">
+            <label>Guest Name</label>
+            <input type="text" id="inviteName" placeholder="e.g. Kasun Perera" required>
+          </div>
+          <div class="field">
+            <label>Guest Type</label>
+            <select id="inviteType">
+              <option value="individual">Individual</option>
+              <option value="couple">Couple</option>
+              <option value="family">Family</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Number Invited</label>
+            <input type="number" id="inviteCount" min="1" value="1" required>
+          </div>
+          <div class="field">
+            <label>Phone (optional, for WhatsApp)</label>
+            <input type="text" id="invitePhone" placeholder="e.g. 94771234567">
+          </div>
+          <div class="field full">
+            <label>Expected Guest / Family Names (optional, one per line)</label>
+            <textarea id="inviteMembers" placeholder="e.g.&#10;Kasun Perera&#10;Nadeesha Perera"></textarea>
+          </div>
+        </div>
+        <button type="submit" class="submit-invite-btn">Generate Invitation</button>
+      </form>
+
+      <div class="link-result" id="linkResult">
+        <p><strong id="linkResultName"></strong> — invitation created!</p>
+        <input type="text" id="generatedLink" readonly>
+        <div class="link-actions">
+          <button type="button" class="copy-btn" id="copyLinkBtn">Copy Link</button>
+          <a class="wa-btn" id="waLinkBtn" target="_blank" rel="noopener">Send via WhatsApp</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Guest List</h2>
+      <div class="filters">
+        <input type="text" id="searchInput" placeholder="Search guest name...">
+        <select id="statusFilter">
+          <option value="all">All Status</option>
+          <option value="attending">Attending</option>
+          <option value="not_attending">Not Attending</option>
+          <option value="pending">Pending</option>
+        </select>
+        <select id="typeFilter">
+          <option value="all">All Types</option>
+          <option value="individual">Individual</option>
+          <option value="couple">Couple</option>
+          <option value="family">Family</option>
+        </select>
+      </div>
+
+      <table>
+        <thead>
+          <tr><th>Guest</th><th>Type</th><th>Invited</th><th>Attending</th><th>Status</th><th>Actions</th></tr>
+        </thead>
+        <tbody id="guestTableBody"></tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-box">
+      <h3 id="modalGuestName"></h3>
+      <div class="modal-row"><div class="k">Type</div><div id="modalType"></div></div>
+      <div class="modal-row"><div class="k">Invited</div><div id="modalInvited"></div></div>
+      <div class="modal-row"><div class="k">Attending</div><div id="modalAttending"></div></div>
+      <div class="modal-row"><div class="k">Members</div><div id="modalMembers"></div></div>
+      <div class="modal-row"><div class="k">Status</div><div id="modalStatus"></div></div>
+      <div class="modal-row"><div class="k">Message</div><div id="modalMessage"></div></div>
+      <div class="modal-row"><div class="k">Invitation Link</div><div id="modalLink"></div></div>
+      <button class="modal-close" id="modalCloseBtn">Close</button>
+    </div>
+  </div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../js/firebase-config.js"></script>
+<script src="dashboard.js"></script>
+</body>
+</html>

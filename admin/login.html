@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Login | Sureka &amp; Deshan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:wght@400;500;600&family=Cinzel:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { height:100%; background:#2b2925; font-family:'Cormorant Garamond', serif; display:flex; align-items:center; justify-content:center; }
+  .login-card { width:360px; max-width:90%; background:#fdfcfb; padding:40px 28px; box-shadow:0 30px 60px rgba(0,0,0,0.4); text-align:center; }
+  .login-title { font-family:'Alex Brush', cursive; font-size:2.4rem; color:#2b2925; margin-bottom:4px; }
+  .login-sub { font-family:'Cinzel', serif; font-size:0.7rem; letter-spacing:2px; text-transform:uppercase; color:#8b877e; margin-bottom:26px; }
+  .field { text-align:left; margin-bottom:16px; }
+  .field label { display:block; font-family:'Cinzel', serif; font-size:0.68rem; letter-spacing:1.5px; text-transform:uppercase; color:#55524c; margin-bottom:6px; }
+  .field input { width:100%; padding:10px 12px; font-size:1rem; border:1px solid #ddd8cc; border-radius:4px; }
+  .login-btn { width:100%; padding:13px; margin-top:6px; border:none; border-radius:999px; background:#2b2925; color:#fdfcfb; font-family:'Cinzel', serif; font-weight:600; letter-spacing:2px; text-transform:uppercase; font-size:0.82rem; cursor:pointer; }
+  .login-btn:disabled { opacity:0.6; }
+  .err { color:#b13a3a; font-size:0.85rem; margin-top:10px; display:none; }
+</style>
+</head>
+<body>
+
+  <div class="login-card">
+    <p class="login-title">Welcome Back</p>
+    <p class="login-sub">Wedding Guest Dashboard</p>
+
+    <form id="loginForm">
+      <div class="field">
+        <label>Email</label>
+        <input type="email" id="email" required>
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input type="password" id="password" required>
+      </div>
+      <button type="submit" class="login-btn" id="loginBtn">Log In</button>
+      <p class="err" id="loginErr">Invalid email or password.</p>
+    </form>
+  </div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="../js/firebase-config.js"></script>
+<script>
+  auth.onAuthStateChanged(user => {
+    if (user) window.location.href = 'dashboard.html';
+  });
+
+  document.getElementById('loginForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('loginBtn');
+    const err = document.getElementById('loginErr');
+    err.style.display = 'none';
+    btn.disabled = true;
+    btn.textContent = 'Logging in...';
+
+    try {
+      await auth.signInWithEmailAndPassword(
+        document.getElementById('email').value,
+        document.getElementById('password').value
+      );
+      window.location.href = 'dashboard.html';
+    } catch (e2) {
+      console.error(e2);
+      err.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Log In';
+    }
+  });
+</script>
+</body>
+</html>

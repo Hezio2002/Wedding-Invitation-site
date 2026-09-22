@@ -1,0 +1,810 @@
+/* ---------- Reset ---------- */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  background: #d9d9d9;
+  font-family: 'Cormorant Garamond', serif;
+  overflow-x: hidden;
+}
+
+/* ---------- Shared card width, used by every page/section ---------- */
+:root {
+  --card-width: 440px;
+}
+
+/* ---------- Section / background (one per "page") ---------- */
+.section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 16px;
+  overflow: hidden;
+}
+
+/* Hero section: no padding, card fills the full viewport height */
+.hero-section {
+  padding: 0;
+}
+
+.bg-photo {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: blur(1px) grayscale(10%) brightness(1.15);
+  transform: scale(1.1); /* hide blur edges */
+  opacity: 0.55;
+}
+
+/* ---------- Invitation card (page 1: dark photo card) ---------- */
+.card {
+  position: relative;
+  width: var(--card-width);
+  max-width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  border-radius: 0;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.35);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  isolation: isolate;
+}
+
+.card-photo {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: top center;
+  filter: grayscale(100%) contrast(1.05);
+  z-index: 0;
+}
+
+/* darken lower portion so text is legible */
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0) 35%, rgba(0,0,0,0.55) 60%, rgba(0,0,0,0.85) 100%);
+  z-index: 1;
+}
+
+/* ---------- decorative string lights ---------- */
+.lights {
+  position: absolute;
+  top: 6%;
+  left: 0;
+  right: 0;
+  height: 40px;
+  z-index: 2;
+  pointer-events: none;
+}
+.lights span {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #f5d98b;
+  box-shadow: 0 0 8px 3px rgba(245, 217, 139, 0.8);
+  animation: twinkle 2.4s ease-in-out infinite;
+}
+.lights span:nth-child(1) { top: 4px;  left: 12%; animation-delay: 0s; }
+.lights span:nth-child(2) { top: 14px; left: 24%; animation-delay: .3s; }
+.lights span:nth-child(3) { top: 2px;  left: 38%; animation-delay: .6s; }
+.lights span:nth-child(4) { top: 18px; left: 52%; animation-delay: .9s; }
+.lights span:nth-child(5) { top: 6px;  left: 66%; animation-delay: 1.2s; }
+.lights span:nth-child(6) { top: 16px; left: 80%; animation-delay: 1.5s; }
+
+@keyframes twinkle {
+  0%, 100% { opacity: .4; }
+  50%      { opacity: 1; }
+}
+
+/* ---------- "We Do" heart block (animates top -> down) ---------- */
+.we-do-wrap {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  margin-bottom: 6%;
+  animation: dropIn 1.1s cubic-bezier(.2,.8,.2,1) both;
+  animation-delay: .2s;
+}
+
+@keyframes dropIn {
+  0%   { opacity: 0; transform: translateY(-70px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.heart-glow {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 150px;
+  transform: translate(-50%, -55%);
+  fill: none;
+  stroke: #e8c983;
+  stroke-width: 2.5;
+  opacity: 0.55;
+  filter: drop-shadow(0 0 6px rgba(232, 201, 131, 0.8));
+}
+
+.we-do {
+  position: relative;
+  font-family: 'Alex Brush', cursive;
+  font-weight: 400;
+  font-size: 4.2rem;
+  color: #000000;
+  text-shadow: 0 0 12px rgba(255,255,255,0.85), 0 0 30px rgba(255,255,255,0.4);
+  letter-spacing: 2px;
+}
+.we-do span {
+  color: #000000;
+}
+
+/* ---------- Lower text block (animates bottom -> up) ---------- */
+.details {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: #f4f1ea;
+  padding: 0 24px 28px;
+  animation: riseIn 1.1s cubic-bezier(.2,.8,.2,1) both;
+  animation-delay: .5s;
+}
+
+@keyframes riseIn {
+  0%   { opacity: 0; transform: translateY(60px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.together {
+  font-family: 'Cinzel', serif;
+  font-size: 0.72rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #e7e2d6;
+  margin-bottom: 10px;
+}
+
+/* ---------- Couple names: slide in left / right ---------- */
+.names {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.name {
+  font-family: 'Cinzel', serif;
+  font-weight: 600;
+  font-size: 2.1rem;
+  letter-spacing: 1px;
+  color: #f3d98b;
+  text-shadow: 0 0 10px rgba(243, 217, 139, 0.35);
+  opacity: 0;
+}
+
+.name-left {
+  animation: slideFromLeft 1s cubic-bezier(.2,.8,.2,1) both;
+  animation-delay: 1.1s;
+}
+
+.name-right {
+  animation: slideFromRight 1s cubic-bezier(.2,.8,.2,1) both;
+  animation-delay: 1.1s;
+}
+
+@keyframes slideFromLeft {
+  0%   { opacity: 0; transform: translateX(-90px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideFromRight {
+  0%   { opacity: 0; transform: translateX(90px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+.amp {
+  font-family: 'Alex Brush', cursive;
+  font-size: 1.6rem;
+  color: #e7e2d6;
+  opacity: 0;
+  animation: fadeIn 1s ease both;
+  animation-delay: 1.5s;
+}
+
+@keyframes fadeIn {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.invite-line {
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  line-height: 1.7;
+  color: #e7e2d6;
+  margin-bottom: 16px;
+}
+
+/* ---------- Date row ---------- */
+.date-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  border-top: 1px solid rgba(244,241,234,0.5);
+  border-bottom: 1px solid rgba(244,241,234,0.5);
+  padding: 10px 0;
+  margin: 0 auto 14px;
+  max-width: 340px;
+}
+
+.date-col { flex: 1; text-align: center; }
+.date-col--left  { border-right: 1px solid rgba(244,241,234,0.5); padding-right: 10px; }
+.date-col--right { border-left: 1px solid rgba(244,241,234,0.5); padding-left: 10px; }
+
+.day, .time {
+  font-family: 'Cinzel', serif;
+  font-size: 0.72rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #f4f1ea;
+}
+
+.month {
+  display: block;
+  font-family: 'Cinzel', serif;
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #f4f1ea;
+}
+.num {
+  display: block;
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  font-size: 2.3rem;
+  line-height: 1;
+  color: #f4f1ea;
+}
+.year {
+  display: block;
+  font-family: 'Cinzel', serif;
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  color: #f4f1ea;
+}
+
+.venue {
+  font-family: 'Cinzel', serif;
+  font-size: 0.68rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #e7e2d6;
+}
+
+/* =====================================================
+   PAGE 2 : COUNTDOWN SECTION
+   ===================================================== */
+
+/* Page 2 (photo section): same full-bleed treatment */
+.photo-section {
+  padding: 0;
+}
+
+.photo-section .card {
+  transform: translateY(0px);
+}
+
+/* Page 2 card: no dark overlay, no grayscale — plain photo only */
+.photo-section .card::after {
+  content: none;
+}
+
+.photo-section .card-photo {
+  filter: none;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* ---------- Page 2: countdown overlay on top of the photo ---------- */
+.countdown-overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 55%;
+  z-index: 2;
+  padding: 24px 20px 40px;
+  text-align: center;
+  background: transparent;
+  color: #ffffff;
+}
+
+.countdown-overlay .script-heading {
+  font-family: 'Alex Brush', cursive;
+  font-weight: 400;
+  font-size: 2.4rem;
+  color: #ffffff;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.countdown-overlay .sub-heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  color: #000000;
+  margin-bottom: 20px;
+}
+
+.countdown-timer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 10px;
+}
+
+.time-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 50px;
+}
+
+.time-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  font-size: 2.2rem;
+  line-height: 1;
+  color: #000000;
+}
+
+.time-num--accent {
+  color: #e8c983;
+}
+
+.time-label {
+  margin-top: 4px;
+  font-family: 'Cinzel', serif;
+  font-size: 0.5rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #000000;
+}
+
+.colon {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.9rem;
+  font-weight: 500;
+  color: #000000;
+  padding-top: 2px;
+}
+
+/* =====================================================
+   PAGE 3 : VENUE SECTION
+   ===================================================== */
+
+.venue-section {
+  background: #fdfcfb;
+  padding: 0 16px;
+}
+
+.venue-card {
+  position: relative;
+  width: var(--card-width);
+  max-width: 100%;
+  background: #fdfcfb;
+  color: #2b2925;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+  padding: 44px 32px 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  animation: riseIn 1s cubic-bezier(.2,.8,.2,1) both;
+}
+
+.venue-title {
+  font-family: 'Cinzel', serif;
+  font-weight: 600;
+  font-size: 2.2rem;
+  letter-spacing: 6px;
+  color: #2b2925;
+  margin-bottom: 18px;
+}
+
+.venue-icon {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 14px;
+}
+
+.venue-icon svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: #2b2925;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.venue-name {
+  font-family: 'Cinzel', serif;
+  font-weight: 600;
+  font-size: 1.4rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.venue-desc {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #55524c;
+  max-width: 320px;
+  margin-bottom: 26px;
+}
+
+.venue-photo {
+  width: 100%;
+  max-width: 340px;
+  aspect-ratio: 4 / 3;
+  background-size: cover;
+  background-position: center;
+  border-radius: 4px;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+  margin-bottom: 30px;
+}
+
+.maps-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  border: 1.5px solid #2b2925;
+  border-radius: 999px;
+  padding: 6px 28px 6px 6px;
+  text-decoration: none;
+  color: #2b2925;
+  font-family: 'Cinzel', serif;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  margin-bottom: 34px;
+}
+
+.maps-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #2b2925;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.maps-icon svg {
+  width: 18px;
+  height: 18px;
+  fill: #fdfcfb;
+}
+
+.venue-icon--bed {
+  margin-bottom: 10px;
+}
+
+.venue-stay {
+  font-family: 'Alex Brush', cursive;
+  font-size: 1.6rem;
+  color: #2b2925;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .we-do-wrap, .details, .name-left, .name-right, .amp, .venue-card, .programme-card {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* =====================================================
+   PAGE 4 : WEDDING DAY PROGRAMME (TIMELINE)
+   ===================================================== */
+
+.programme-section {
+  background: #fdfcfb;
+  padding: 0 16px;
+}
+
+.programme-card {
+  position: relative;
+  width: var(--card-width);
+  max-width: 100%;
+  background: #fdfcfb;
+  color: #2b2925;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+  padding: 48px 32px 56px;
+  animation: riseIn 1s cubic-bezier(.2,.8,.2,1) both;
+}
+
+.programme-title {
+  font-family: 'Cinzel', serif;
+  font-weight: 600;
+  font-size: 1.5rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.5;
+  color: #2b2925;
+  margin-bottom: 40px;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+}
+
+.timeline-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 18px;
+  padding-bottom: 30px;
+}
+
+.timeline-item:last-child {
+  padding-bottom: 0;
+}
+
+.timeline-item:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  top: 48px;
+  left: 23px;
+  width: 1px;
+  height: calc(100% - 34px);
+  background: #ddd8cc;
+}
+
+.timeline-icon {
+  position: relative;
+  z-index: 1;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid #ddd8cc;
+  background: #fdfcfb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.timeline-icon img {
+  width: 100%;
+  height: 100%;
+  padding: 4px;
+  object-fit: contain;
+  object-position: center;
+}
+
+.timeline-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 4px;
+}
+
+.timeline-time {
+  font-family: 'Cinzel', serif;
+  font-weight: 600;
+  font-size: 0.72rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #c9a86a;
+  margin-bottom: 4px;
+}
+
+.timeline-label {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15rem;
+  color: #2b2925;
+}
+
+
+ 
+/* =====================================================
+   PAGE 5 : YOUR INVITATION (dynamic guest name & type)
+   ===================================================== */
+ 
+.invite-section {
+  background: #fdfcfb;
+}
+ 
+.invite-card {
+  position: relative;
+  width: var(--card-width);
+  max-width: 100%;
+  background: #fdfcfb;
+  color: #2b2925;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+  padding: 48px 32px 52px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  animation: riseIn 1s cubic-bezier(.2,.8,.2,1) both;
+}
+ 
+.invite-title {
+  font-family: 'Cinzel', serif;
+  font-weight: 600;
+  font-size: 1.6rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #2b2925;
+  margin-bottom: 20px;
+}
+ 
+.invite-icon {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 16px;
+}
+ 
+.invite-icon svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: #c9a86a;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+ 
+.invite-guest-name {
+  font-family: 'Cinzel', serif;
+  font-weight: 600;
+  font-size: 1.5rem;
+  letter-spacing: 1px;
+  color: #2b2925;
+  margin-bottom: 14px;
+}
+ 
+.invite-type-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #55524c;
+  max-width: 320px;
+  margin-bottom: 30px;
+}
+ 
+.invite-rsvp-btn {
+  display: inline-block;
+  background: #2b2925;
+  color: #fdfcfb;
+  text-decoration: none;
+  padding: 13px 40px;
+  border-radius: 999px;
+  font-family: 'Cinzel', serif;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+}
+ 
+/* ---------- Respect reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .we-do-wrap, .details, .name-left, .name-right, .amp, .venue-card, .programme-card, .invite-card {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+ 
+/* ---------- Mobile tweaks ---------- */
+@media (max-width: 480px) {
+  .we-do { font-size: 3.2rem; }
+  .name  { font-size: 1.6rem; }
+}
+
+/* Page 5 only: remove the blur/grayscale from the background photo */
+.invite-section .bg-photo {
+  filter: none;
+  opacity: 1;
+}
+
+
+
+/* Page 5 only: remove the blur/grayscale from the background photo */
+.invite-section .bg-photo {
+  filter: none;
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* =====================================================
+   PAGE 6 : SAVE THE DATE
+   ===================================================== */
+
+.savedate-section {
+  height: 100vh;
+  padding: 0;
+  overflow: hidden;
+}
+
+.savedate-photo {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: top center;
+}
+
+.savedate-overlay {
+  display: none;
+}
+
+.savedate-content {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  top: 10%;              /* උඩ ඉඳන් % එකක් - 0% = උඩම, 100% = යටම */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+}
+
+.savedate-day {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  font-size: 5rem;
+  line-height: 1;
+  color: #f3d98b;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+}
+
+.savedate-month {
+  font-family: 'Cinzel', serif;
+  font-weight: 600;
+  font-size: 1.3rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #f3d98b;
+  margin-top: 6px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+.savedate-script {
+  font-family: 'Alex Brush', cursive;
+  font-size: 2.4rem;
+  color: #f3d98b;
+  margin-top: 18px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+
+
+
+
+
+
+
+
+
+
+

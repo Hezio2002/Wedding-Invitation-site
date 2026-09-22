@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RSVP | Sureka &amp; Deshan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:wght@400;500;600;700&family=Cinzel:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { min-height:100%; background:#e9e6df; font-family:'Cormorant Garamond', serif; }
+  .rsvp-wrap { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:40px 16px; }
+  .rsvp-card { width:440px; max-width:100%; background:#fdfcfb; box-shadow:0 30px 60px rgba(0,0,0,0.2); padding:40px 28px; text-align:center; }
+  .rsvp-title { font-family:'Alex Brush', cursive; font-size:2.6rem; color:#2b2925; margin-bottom:4px; }
+  .rsvp-sub { font-family:'Cinzel', serif; font-size:0.7rem; letter-spacing:2px; text-transform:uppercase; color:#8b877e; margin-bottom:26px; }
+  .rsvp-guest-name { font-family:'Cinzel', serif; font-weight:600; font-size:1.3rem; letter-spacing:1px; color:#2b2925; margin-bottom:26px; }
+  .field { text-align:left; margin-bottom:18px; }
+  .field label { display:block; font-family:'Cinzel', serif; font-size:0.7rem; letter-spacing:1.5px; text-transform:uppercase; color:#55524c; margin-bottom:6px; }
+  .field input[type="text"], .field input[type="number"], .field textarea, .field select {
+    width:100%; padding:10px 12px; font-family:'Cormorant Garamond', serif; font-size:1rem;
+    border:1px solid #ddd8cc; border-radius:4px; background:#fff; color:#2b2925;
+  }
+  .field textarea { min-height:80px; resize:vertical; }
+  .attend-choice { display:flex; gap:10px; }
+  .attend-choice label {
+    flex:1; display:flex; align-items:center; justify-content:center; gap:8px;
+    border:1.5px solid #ddd8cc; border-radius:6px; padding:12px 8px; cursor:pointer;
+    font-family:'Cinzel', serif; font-size:0.78rem; letter-spacing:1px; text-transform:uppercase; color:#2b2925;
+  }
+  .attend-choice input { accent-color:#c9a86a; }
+  .attend-choice label.active { border-color:#c9a86a; background:#faf3e3; }
+  .hint { font-size:0.82rem; color:#8b877e; margin-top:6px; }
+  .error-msg { color:#b13a3a; font-size:0.85rem; margin-top:8px; display:none; }
+  .submit-btn {
+    width:100%; padding:14px; margin-top:8px; border:none; border-radius:999px;
+    background:#2b2925; color:#fdfcfb; font-family:'Cinzel', serif; font-weight:600;
+    letter-spacing:2px; text-transform:uppercase; font-size:0.85rem; cursor:pointer;
+  }
+  .submit-btn:disabled { opacity:0.6; cursor:not-allowed; }
+  .state-msg { font-family:'Cormorant Garamond', serif; font-size:1.1rem; color:#55524c; }
+  .thankyou-heart { font-size:2rem; margin-bottom:10px; }
+  .thankyou-title { font-family:'Alex Brush', cursive; font-size:2rem; color:#2b2925; margin-bottom:12px; }
+  .thankyou-text { color:#55524c; line-height:1.6; }
+  .hidden { display:none !important; }
+</style>
+</head>
+<body>
+
+<div class="rsvp-wrap">
+  <div class="rsvp-card">
+
+    <div id="loadingState" class="state-msg">Loading your invitation...</div>
+
+    <div id="invalidState" class="state-msg hidden">
+      This invitation link isn't valid. Please check the link your hosts sent you.
+    </div>
+
+    <form id="rsvpForm" class="hidden">
+      <p class="rsvp-title">RSVP</p>
+      <p class="rsvp-sub">We'd love to know if you can make it</p>
+      <p class="rsvp-guest-name" id="guestNameDisplay"></p>
+
+      <div class="field">
+        <label>Will you attend?</label>
+        <div class="attend-choice">
+          <label id="lblYes"><input type="radio" name="attending" value="yes" required> Yes, I'll be there</label>
+          <label id="lblNo"><input type="radio" name="attending" value="no" required> Sorry, can't make it</label>
+        </div>
+      </div>
+
+      <div id="attendingFields">
+        <div class="field">
+          <label>Number of guests attending</label>
+          <input type="number" id="attendingCount" min="0" value="1">
+          <p class="hint" id="invitedHint"></p>
+          <p class="error-msg" id="countError">Your invitation is reserved for up to <span id="maxCount"></span> guest(s).</p>
+        </div>
+
+        <div class="field">
+          <label>Name(s) attending (one per line)</label>
+          <textarea id="memberNames" placeholder="e.g.&#10;Kasun Perera&#10;Nadeesha Perera"></textarea>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Special note (optional)</label>
+        <textarea id="specialMessage" placeholder="Dietary requirements, song requests, anything else..."></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn" id="submitBtn">Submit RSVP</button>
+    </form>
+
+    <div id="thankyouState" class="hidden">
+      <div class="thankyou-heart">❤️</div>
+      <p class="thankyou-title">Thank you<span id="thankyouName"></span></p>
+      <p class="thankyou-text">
+        Your RSVP has been received.<br>
+        We can't wait to celebrate our special day with you!
+      </p>
+    </div>
+
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="js/firebase-config.js"></script>
+<script src="js/rsvp.js"></script>
+</body>
+</html>

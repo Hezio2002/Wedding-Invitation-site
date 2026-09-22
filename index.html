@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sureka &amp; Deshan | We Do</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:wght@400;500;600&family=Cinzel:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ============= PAGE 1 : HERO / WE DO ============= -->
+  <section class="section hero-section">
+
+    <!-- Background blurred photo -->
+    <div class="bg-photo" style="background-image:url('images/background.jpg')"></div>
+
+    <!-- Center invitation card -->
+    <div class="card">
+
+      <!-- Foreground couple photo -->
+      <div class="card-photo" style="background-image:url('images/couple.jpg')"></div>
+
+      <!-- String lights (decorative) -->
+      <div class="lights">
+        <span></span><span></span><span></span><span></span><span></span><span></span>
+      </div>
+
+      <!-- "We Do" heart animation: top -> down -->
+      <div class="we-do-wrap">
+        <svg class="heart-glow" viewBox="0 0 200 180" xmlns="http://www.w3.org/2000/svg">
+          <path d="M100 170 C 20 110, 10 60, 45 30 C 70 8, 95 25, 100 50 C 105 25, 130 8, 155 30 C 190 60, 180 110, 100 170 Z"/>
+        </svg>
+        <h1 class="we-do">We <span>Do</span></h1>
+      </div>
+
+      <!-- Text block: bottom -> up -->
+      <div class="details">
+
+        <p class="together">Together with their families</p>
+
+        <!-- Couple names: slide in from left / right -->
+        <div class="names">
+          <span class="name name-left">Sureka</span>
+          <span class="amp">and</span>
+          <span class="name name-right">Deshan</span>
+        </div>
+
+        <p class="invite-line">
+          Invite you<br>
+          to their wedding celebration
+        </p>
+
+         <div class="date-row">
+          <div class="date-col date-col--left">
+            <span class="day">Friday</span>
+          </div>
+          <div class="date-col date-col--mid">
+            <span class="month">January</span>
+            <span class="num">22</span>
+            <span class="year">2027</span>
+          </div>
+          <div class="date-col date-col--right">
+            <span class="time">at 8:30 AM</span>
+          </div>
+        </div>
+
+        <p class="venue">8221 Sunset Blvd, West Hollywood</p>
+
+      </div>
+
+    </div>
+  </section>
+
+    <!-- ============= PAGE 2 : PHOTO ============= -->
+  <section class="section photo-section">
+
+    <!-- Background blurred photo -->
+    <div class="bg-photo" style="background-image:url('images/page2-background.jpg')"></div>
+
+    <!-- Foreground full photo -->
+    <div class="card">
+      <div class="card-photo" style="background-image:url('images/page2-photo.jpg')"></div>
+
+      <!-- Countdown overlay -->
+      <div class="countdown-overlay">
+        <div class="countdown-timer">
+          <div class="time-block">
+            <span class="time-num" id="cd-days">00</span>
+            <span class="time-label">Days</span>
+          </div>
+          <span class="colon">:</span>
+          <div class="time-block">
+            <span class="time-num" id="cd-hours">00</span>
+            <span class="time-label">Hours</span>
+          </div>
+          <span class="colon">:</span>
+          <div class="time-block">
+            <span class="time-num" id="cd-mins">00</span>
+            <span class="time-label">Minutes</span>
+          </div>
+          <span class="colon">:</span>
+          <div class="time-block">
+            <span class="time-num time-num--accent" id="cd-secs">00</span>
+            <span class="time-label">Seconds</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+
+  
+  <script src="js/script.js"></script>
+</body>
+</html>
+  <!-- ============= PAGE 3 : VENUE ============= -->
+  <section class="section venue-section">
+ 
+    <!-- Background blurred photo -->
+    <div class="bg-photo" style="background-image:url('images/venue-background.jpg')"></div>
+ 
+    <!-- Center card -->
+    <div class="venue-card">
+ 
+      <h2 class="venue-title">Venue</h2>
+ 
+      <div class="venue-icon">
+        <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6 28 L30 8 L54 28" />
+          <path d="M14 26 V52 H46 V26" />
+          <path d="M30 44 C 26 38, 18 38, 18 46 C 18 52, 30 58, 30 58 C 30 58, 42 52, 42 46 C 42 38, 34 38, 30 44 Z" />
+        </svg>
+      </div>
+ 
+      <h3 class="venue-name">Hotel Green Court</h3>
+ 
+      <!-- EDIT ME: write your own short venue description here -->
+      <p class="venue-desc">
+        Write a short description of your venue here — what makes it special,
+        the setting, and what guests can expect.
+      </p>
+ 
+      <!-- Venue photo -->
+      <div class="venue-photo" style="background-image:url('images/venue-photo.jpg')"></div>
+ 
+      <!-- Google Maps button: change the href below to your venue's map link -->
+      <a class="maps-btn" href="https://maps.app.goo.gl/Pd8EtBtXuvtTyfCh7" target="_blank" rel="noopener">
+        <span class="maps-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C7.6 2 4 5.6 4 10c0 6 8 12 8 12s8-6 8-12c0-4.4-3.6-8-8-8zm0 11a3 3 0 110-6 3 3 0 010 6z"/>
+          </svg>
+        </span>
+        <span>Google Maps</span>
+      </a>
+ 
+      <div class="venue-icon venue-icon--bed">
+        <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6 44 V50" />
+          <path d="M54 44 V50" />
+          <path d="M6 44 V32 C6 28 9 26 13 26 H47 C51 26 54 28 54 32 V44" />
+          <path d="M6 38 H54" />
+          <path d="M14 26 V20 C14 17 16 15 19 15 H24 C27 15 29 17 29 20" />
+          <path d="M25 8 C 22 4, 16 4, 16 10 C 16 14, 25 19, 25 19 C 25 19, 34 14, 34 10 C 34 4, 28 4, 25 8 Z" />
+        </svg>
+      </div>
+ 
+      <p class="venue-stay">Stay at Hotel Green Court</p>
+ 
+    </div>
+  </section>
+  
+  
+<!-- ============= PAGE 4 : PROGRAMME ============= -->
+  <section class="section programme-section">
+ 
+    <!-- Background blurred photo -->
+    <div class="bg-photo" style="background-image:url('images/programme-background.jpg')"></div>
+ 
+    <!-- Center card -->
+    <div class="programme-card">
+ 
+      <h2 class="programme-title">Wedding Day<br>Programme</h2>
+ 
+      <div class="timeline">
+ 
+        <div class="timeline-item">
+          <div class="timeline-icon"><img src="images/icon-arrival.jpg" alt="Guest Arrival"></div>
+          <div class="timeline-text">
+            <span class="timeline-time">8:30 AM</span>
+            <span class="timeline-label">Guest Arrival &amp; Welcome</span>
+          </div>
+        </div>
+ 
+        <div class="timeline-item">
+          <div class="timeline-icon"><img src="images/icon-poruwa.jpg" alt="Poruwa Ceremony"></div>
+          <div class="timeline-text">
+            <span class="timeline-time">9:30 AM</span>
+            <span class="timeline-label">Poruwa Ceremony</span>
+          </div>
+        </div>
+ 
+        <div class="timeline-item">
+          <div class="timeline-icon"><img src="images/icon-registration.jpg" alt="Marriage Registration"></div>
+          <div class="timeline-text">
+            <span class="timeline-time">10:15 AM</span>
+            <span class="timeline-label">Marriage Registration</span>
+          </div>
+        </div>
+ 
+        <div class="timeline-item">
+          <div class="timeline-icon"><img src="images/icon-photography.jpg" alt="Wedding Photography"></div>
+          <div class="timeline-text">
+            <span class="timeline-time">10:30 AM</span>
+            <span class="timeline-label">Wedding Photography</span>
+          </div>
+        </div>
+ 
+        <div class="timeline-item">
+          <div class="timeline-icon"><img src="images/icon-lunch.jpg" alt="Wedding Lunch"></div>
+          <div class="timeline-text">
+            <span class="timeline-time">12:30 PM</span>
+            <span class="timeline-label">Wedding Lunch</span>
+          </div>
+        </div>
+ 
+        <div class="timeline-item">
+          <div class="timeline-icon"><img src="images/icon-cake.jpg" alt="Cake Cutting & Toast"></div>
+          <div class="timeline-text">
+            <span class="timeline-time">1:30 PM</span>
+            <span class="timeline-label">Cake Cutting &amp; Toast</span>
+          </div>
+        </div>
+ 
+        <div class="timeline-item">
+          <div class="timeline-icon"><img src="images/icon-music.jpg" alt="Music & Dancing"></div>
+          <div class="timeline-text">
+            <span class="timeline-time">2:00 PM</span>
+            <span class="timeline-label">Music &amp; Dancing</span>
+          </div>
+        </div>
+ 
+        <div class="timeline-item">
+          <div class="timeline-icon"><img src="images/icon-departure.jpg" alt="Newlyweds' Departure"></div>
+          <div class="timeline-text">
+            <span class="timeline-time">4:00 PM</span>
+            <span class="timeline-label">Newlyweds&rsquo; Departure</span>
+          </div>
+        </div>
+ 
+      </div>
+ 
+    </div>
+  </section>
+  
+
+  <section class="section invite-section">
+ 
+    <!-- Background blurred photo (reuse the venue background, or add your own) -->
+    <div class="bg-photo" style="background-image:url('images/invite-background.jpg')"></div>
+ 
+    <!-- Center card -->
+    <div class="invite-card">
+ 
+      <h2 class="invite-title">Your Invitation</h2>
+ 
+      <div class="invite-icon">
+        <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+          <path d="M30 44 C 20 34, 8 28, 8 16 C 8 6, 22 2, 30 14 C 38 2, 52 6, 52 16 C 52 28, 40 34, 30 44 Z" />
+        </svg>
+      </div>
+ 
+      <p class="invite-guest-name" id="inviteGuestName">Our Guests</p>
+      <p class="invite-type-text" id="inviteTypeText">You are warmly invited to celebrate our wedding with us.</p>
+ 
+      <a class="invite-rsvp-btn" id="inviteRsvpBtn" href="rsvp.html">RSVP Now</a>
+ 
+    </div>
+  </section>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="js/firebase-config.js"></script>
+<script src="js/script.js"></script>
+
+  <!-- ============= PAGE 6 : SAVE THE DATE ============= -->
+  <section class="section savedate-section">
+
+    <!-- Full-bleed photo, no blur -->
+    <div class="savedate-photo" style="background-image:url('images/savedate-photo.jpg')"></div>
+
+    <!-- Light desaturating overlay -->
+    <div class="savedate-overlay"></div>
+
+    <!-- Centered text -->
+    <div class="savedate-content">
+      <span class="savedate-day">22</span>
+      <span class="savedate-month">June</span>
+      <span class="savedate-script">Save the date</span>
+    </div>
+
+  </section>
+
+
+
+
+
+
+
+
